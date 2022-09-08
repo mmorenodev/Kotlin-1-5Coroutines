@@ -67,7 +67,11 @@ runBlocking is another coroutine builder that waits until the coroutine finishes
 
 COROUTINES CAN HAVE OTHER COROUTINES AS CHILDREN.
 
-
+# Jobs, Contexts, Scopes and Structured Concurrency
+- Provide a 'context' in which to run suspend functions: builders provide for us context in which we can run suspend functions. 
+- Project a 'scope' for suspend functions
+- Scope allows for a degree of control: cancellation
+- Coroutine provides a 'Job': can be used to wait, cancel, etc.
 
 
 

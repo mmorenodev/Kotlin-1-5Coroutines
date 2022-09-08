@@ -73,5 +73,40 @@ COROUTINES CAN HAVE OTHER COROUTINES AS CHILDREN.
 - Scope allows for a degree of control: cancellation
 - Coroutine provides a 'Job': can be used to wait, cancel, etc.
 
+## Job Interface
+Job is an interface, coroutine builders such as 'launch' return a Job to us for us to use. 
+'launch' returns a Job
+- Can use this to 'join' the coroutine
+- Can use it to check if the coroutine has finished
+
+## Join
+Similar to joining a thread in that the CALLING CODE BLOCKS UNTIL the coroutine has finished.
+
+## Joining Coroutines
+
+<img width="506" alt="imagen" src="https://user-images.githubusercontent.com/66931789/189231935-8554d76e-1a42-480a-b75f-8ab6b6aa1c02.png">
+
+By calling the join method, which suspends THIS COROUTINE until the coroutine it's joined to has finished its work. 
+
+## Basic Cancellation of Coroutines
+One of the issues with join is that we might wait forever, and we can certainly end up waiting for too long. 
+
+What happens if a coroutine runs too long?
+- Can cancel
+
+Coroutine may have open resources, and coroutines **may throw exceptions DURING CANCELLATION**
+
+I can't just stop a thread, I can't just terminate a thread. To stop a thread we have to get that thread to cooperate. The same thing is true with coroutines, if I want to cancel a coroutine, cancellation IS COOPERATIVE. This means that the coroutine itself must get INVOLVED WITH THE CANCELLATION. 
+
+**If you don't check for cancellation then will not be cancelled.**
+
+If I write a suspend function that is doing some long-running task, then that suspend function should occasionally check to see if it's been cancelled, and if it's been cancelled. If it has been cancelled, then end itself appropriately. 
+
+**ALL BUILT-IN SUSPENDING FUNCTIONS COOPERATE.** For example, if you're in the middle of a delay function and you cancel the coroutine, delay will check to see if it's been cancelled, and if it has, the coroutine itself will become cancelled. 
+
+
+
+
+
 
 
